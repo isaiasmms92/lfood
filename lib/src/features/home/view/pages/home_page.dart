@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lfood/src/features/home/widgets/all_stores/all_stores_widget.dart';
+import 'package:lfood/src/features/home/widgets/drink_store/drink_store_widget.dart';
+import 'package:lfood/src/features/home/widgets/drugs_stores/drugs_stores_widget.dart';
+import 'package:lfood/src/features/home/widgets/markets/markets_widget.dart';
+import 'package:lfood/src/features/home/widgets/pet_store/pet_store_widget.dart';
+import 'package:lfood/src/features/home/widgets/restaurants/restaurants_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,10 +14,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late final tabController = TabController(length: 6, vsync: this);
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return DefaultTabController(
       length: 6,
       child: Scaffold(
@@ -49,15 +56,20 @@ class _HomePageState extends State<HomePage>
         body: TabBarView(
           controller: tabController,
           children: [
-            Container(color: Colors.indigo),
-            Container(color: Colors.green),
-            Container(color: Colors.red),
-            Container(color: Colors.blue),
-            Container(color: Colors.yellow),
-            Container(color: Colors.black),
+            AllStoresWidget(
+              tabController: tabController,
+            ),
+            RestaurantsWidget(),
+            MarketsWidget(),
+            DrinkStoreWidget(),
+            DrugsStoresWidget(),
+            PetStoreWidget(),
           ],
         ),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
